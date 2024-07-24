@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "environment": {
+        "DEFAULT_FLAGS": "-march=native -fstrict-aliasing -flto",
+        "WARNING_FLAGS": "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough -Wdeprecated",
+        "SANITIZER_FLAGS": "-fsanitize=address,leak,undefined"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_FLAGS": "$env{DEFAULT_FLAGS} $env{WARNING_FLAGS}",
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": "YES",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_COLOR_DIAGNOSTICS": "ON",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache"
+      }
+    },
+    {
+      "name": "dev",
+      "inherits": "default",
+      "displayName": "Develop",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_FLAGS": "$env{DEFAULT_FLAGS} -Werror $env{WARNING_FLAGS} $env{SANITIZER_FLAGS}",
+        "CMAKE_EXE_LINKER_FLAGS": "$env{SANITIZER_FLAGS}"
+      }
+    }
+  ]
+}
