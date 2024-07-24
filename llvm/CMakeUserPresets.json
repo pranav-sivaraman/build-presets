@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "environment": {
+        "LLVM_PROJECTS": "clang;lld",
+        "LLVM_RUNTIMES": "libunwind;libcxxabi;libcxx;compiler-rt;openmp"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_COLOR_DIAGNOSTICS": "ON",
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "LLVM_ENABLE_PROJECTS": "$env{LLVM_PROJECTS}",
+        "LLVM_ENABLE_RUNTIMES": "$env{LLVM_RUNTIMES}"
+      }
+    }
+  ]
+}
