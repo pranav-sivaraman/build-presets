@@ -7,13 +7,14 @@
   },
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default",
+      "name": "base",
+      "displayName": "Base",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
+      "binaryDir": "${sourceDir}/../build-basic",
       "environment": {
-        "LLVM_PROJECTS": "clang;lld",
-        "LLVM_RUNTIMES": "libunwind;libcxxabi;libcxx;compiler-rt;openmp"
+        "LLVM_PROJECTS": "clang",
+        "LLVM_TARGETS": "AArch64",
+        "LLVM_RUNTIMES": "compiler-rt;libunwind;libcxxabi;libcxx;openmp"
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "RelWithDebInfo",
@@ -21,9 +22,25 @@
         "CMAKE_COLOR_DIAGNOSTICS": "ON",
         "CMAKE_C_COMPILER_LAUNCHER": "ccache",
         "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "BUILD_SHARED_LIBS": "ON",
+        "LLVM_REQUIRES_RTTI": "ON",
+        "LLVM_ENABLE_RTTI": "ON",
+        "LLVM_ENABLE_ASSERTIONS": "ON",
+        "LLVM_ENABLE_BACKTRACES": "ON",
+        "LLVM_ENABLE_ZSTD": "ON",
+        "LIBOMP_USE_HWLOC": "ON",
+        "LIBOMP_HWLOC_INSTALL_DIR": "/opt/homebrew/Cellar/hwloc/2.11.1",
+        "CMAKE_INSTALL_PREFIX": "/Users/pranav/Documents/Research/llvm-installs/trunk-basic",
         "LLVM_ENABLE_PROJECTS": "$env{LLVM_PROJECTS}",
-        "LLVM_ENABLE_RUNTIMES": "$env{LLVM_RUNTIMES}"
+        "LLVM_TARGETS_TO_BUILD": "$env{LLVM_TARGETS}",
+        "LLVM_ENABLE_RUNTIMES": "$env{LLVM_RUNTIMES}",
+        "DEFAULT_SYSROOT": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
       }
+    },
+    {
+      "name": "msan",
+      "inherits": "base",
+      "displayName": "msan instrumented libc++"
     }
   ]
 }
